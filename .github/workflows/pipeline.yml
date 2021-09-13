@@ -15,45 +15,58 @@ jobs:
       - name: Check out the sources
         uses: actions/checkout@v2
 
-      - name: Install Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Lint the code
-        run: npm run eslint
-
-      - name: Create deliverables for production
-        run: npm run build
-
-      - name: Run unit tests
-        run: npm test
-
-      - name: Run end-to-end tests
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm run start-prod
-          wait-on: "http://localhost:5000"
-          command: npm run test:e2e
-          spec: cypress/integration/*.js
-
-      - name: Bump version and push tag
-        if: ${{ github.event_name == 'push' }}
-        uses: anothrNick/github-tag-action@1.33.0
+      - name: gihub context
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          DEFAULT_BUMP: patch
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: commits
+        env:
+          COMMITS: ${{ toJson(github.event.commits) }}
+        run: echo "$COMMITS"
+      - name: commit messages
+        env:
+          COMMIT_MESSAGES: ${{ toJson(github.event.commits.*.message) }}
+        run: echo "$COMMIT_MESSAGES"
 
-      - name: Deploy to Heroku
-        if: ${{ github.event_name == 'push' }}
-        uses: akhileshns/heroku-deploy@v3.12.12
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: "pokedex-al"
-          heroku_email: "aleksi.lukkarinen@gmail.com"
-          healthcheck: "https://pokedex-al.herokuapp.com/health"
-          checkstring: "ok"
-          rollbackonhealthcheckfailed: true
+      # - name: Install Node.js
+      #   uses: actions/setup-node@v1
+      #   with:
+      #     node-version: '12.x'
+
+      # - name: Install dependencies
+      #   run: npm install
+
+      # - name: Lint the code
+      #   run: npm run eslint
+
+      # - name: Create deliverables for production
+      #   run: npm run build
+
+      # - name: Run unit tests
+      #   run: npm test
+
+      # - name: Run end-to-end tests
+      #   uses: cypress-io/github-action@v2
+      #   with:
+      #     start: npm run start-prod
+      #     wait-on: "http://localhost:5000"
+      #     command: npm run test:e2e
+      #     spec: cypress/integration/*.js
+
+      # - name: Bump version and push tag
+      #   if: ${{ github.event_name == 'push' }}
+      #   uses: anothrNick/github-tag-action@1.33.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     DEFAULT_BUMP: patch
+
+      # - name: Deploy to Heroku
+      #   if: ${{ github.event_name == 'push' }}
+      #   uses: akhileshns/heroku-deploy@v3.12.12
+      #   with:
+      #     heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+      #     heroku_app_name: "pokedex-al"
+      #     heroku_email: "aleksi.lukkarinen@gmail.com"
+      #     healthcheck: "https://pokedex-al.herokuapp.com/health"
+      #     checkstring: "ok"
+      #     rollbackonhealthcheckfailed: true
