@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '12.x'
 
-      - name: Install of dependencies
+      - name: Install dependencies
         run: npm install
 
       - name: Lint the code
