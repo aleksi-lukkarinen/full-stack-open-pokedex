@@ -30,15 +30,15 @@ jobs:
 
       - name: STR
         env:
-          TEST_STR: ${{ join(github.event.commits.*.message, " ") }}
+          TEST_STR: ${{ join(github.event.commits.*.message, ' ') }}
         run: echo "$TEST_STR"
 
       - name: Do execute?
-        if: ${{ !contains(join(github.event.commits.*.message, " "), "#skip") }}
+        if: ${{ !contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: echo "Do"
 
       - name: Do not execute?
-        if: ${{ contains(join(github.event.commits.*.message, " "), "#skip") }}
+        if: ${{ contains(join(github.event.commits.*.message, ' '), '#skip') }}
         run: echo "Do NOT"
 
       # - name: Install Node.js
