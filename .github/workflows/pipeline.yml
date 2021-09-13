@@ -40,11 +40,19 @@ jobs:
           command: npm run test:e2e
           spec: cypress/integration/*.js
 
+      - name: Bump version and push tag
+        if: ${{ github.event_name == 'push' }}
+        uses: anothrNick/github-tag-action@1.33.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+          DRY_RUN: true
+
       - name: Deploy to Heroku
         if: ${{ github.event_name == 'push' }}
         uses: akhileshns/heroku-deploy@v3.12.12
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
           heroku_app_name: "pokedex-al"
           heroku_email: "aleksi.lukkarinen@gmail.com"
           healthcheck: "https://pokedex-al.herokuapp.com/health"
