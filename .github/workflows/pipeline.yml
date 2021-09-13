@@ -35,3 +35,4 @@ jobs:
           heroku_email: "aleksi.lukkarinen@gmail.com"
           healthcheck: "https://pokedex-al.herokuapp.com/health"
           checkstring: "ok"
+          rollbackonhealthcheckfailed: true
