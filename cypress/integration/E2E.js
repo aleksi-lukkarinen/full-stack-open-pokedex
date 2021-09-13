@@ -8,7 +8,7 @@ describe('Pokedex', function() {
 
   it('detail page of a pokemon can be opened', function() {
     cy.visit('http://localhost:5000')
-    cy.get(".list-item").contains("ivysaur").click()
+    cy.get('.list-item').contains('ivysaur').click()
     cy.contains('overgrow')
     cy.contains('chlorophyll')
   })
