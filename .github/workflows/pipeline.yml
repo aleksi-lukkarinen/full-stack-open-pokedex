@@ -67,7 +67,7 @@ jobs:
           status: ${{ job.status }}
           author_name: simple_deployment_pipeline
           job_name: simple_deployment_pipeline
-          text: A new Pokedex version (${{process.env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/
+          text: A new Pokedex version (${{env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/
           fields: repo,commit,message,author
           mention: here
           if_mention: failure,cancelled
