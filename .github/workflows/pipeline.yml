@@ -66,8 +66,6 @@ jobs:
         with:
           status: custom
           fields: repo,commit,ref,workflow,message,author,job,took
-          mention: here
-          #if_mention: failure,cancelled
           custom_payload: |
             {
               text: `A new Pokedex version (${ process.env.AS_COMMIT }) has been deployed to https://pokedex-al.herokuapp.com/`,
@@ -76,6 +74,4 @@ jobs:
                 text: `From: ${ process.env.AS_REPO }@${ process.env.AS_REF }\nBy: ${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }\nBuild took ${ process.env.AS_TOOK }.\n\nCommit author: ${ process.env.AS_AUTHOR }\nCommit message: ${ process.env.AS_MESSAGE }`,
               }]
             }
-        if: always()
-
-#        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
