@@ -70,10 +70,10 @@ jobs:
           #if_mention: failure,cancelled
           custom_payload: |
             {
-              text: `${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }`,
+              text: `A new Pokedex version (${ process.env.AS_COMMIT }) has been deployed to https://pokedex-al.herokuapp.com/`,
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `A new Pokedex version (${ process.env.AS_COMMIT }) from ${ process.env.AS_REPO }@${ process.env.AS_REF } has been deployed to https://pokedex-al.herokuapp.com/ by ${ process.env.AS_AUTHOR } in ${ process.env.AS_TOOK }.\n\nCommit message: ${ process.env.AS_MESSAGE }`,
+                text: `${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }\nFrom: ${ process.env.AS_REPO }@${ process.env.AS_REF }\nBuild took ${ process.env.AS_TOOK }.\n\nCommit author: ${ process.env.AS_AUTHOR }\nCommit message: ${ process.env.AS_MESSAGE }`,
               }]
             }
         if: always()
