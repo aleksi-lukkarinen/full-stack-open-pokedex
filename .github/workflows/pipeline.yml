@@ -63,6 +63,7 @@ jobs:
         uses: 8398a7/action-slack@047b09b154480ed39076984b64f324fff010d703
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
         with:
           status: custom
           author_name: ${ process.env.AS_WORKFLOW }
