@@ -16,6 +16,8 @@ jobs:
       - name: Check out the sources
         uses: actions/checkout@v2
 
+      - name: fail
+        run: asdfghjk
       # - name: Install Node.js
       #   uses: actions/setup-node@v1
       #   with:
@@ -81,14 +83,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          status: custom
+          status: ${{ job.status }}
+          text: Pokedex build of version (${{ env.AS_COMMIT }}) failed!
           fields: repo,commit,ref,workflow,message,author,job,took
-          custom_payload: |
-            {
-              text: `Pokedex build of version (${ process.env.AS_COMMIT }) failed!`,
-              attachments: [{
-                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
-                text: `From: ${ process.env.AS_REPO }@${ process.env.AS_REF }\nBy: ${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }\nBuild took ${ process.env.AS_TOOK }.\n\nCommit author: ${ process.env.AS_AUTHOR }\nCommit message: ${ process.env.AS_MESSAGE }`,
-              }]
-            }
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
