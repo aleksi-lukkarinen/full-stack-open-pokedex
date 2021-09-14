@@ -64,7 +64,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          status: ${{ job.status }}
+          status: custom
           author_name: simple_deployment_pipeline
           job_name: simple_deployment_pipeline
           text: A new Pokedex version (${{env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/
