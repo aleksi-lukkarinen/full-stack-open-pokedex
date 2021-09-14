@@ -86,4 +86,4 @@ jobs:
           status: ${{ job.status }}
           text: Pokedex build of version (${{ env.AS_COMMIT }}) failed!
           fields: repo,commit,ref,workflow,message,author,job,took
-        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status != 'success' }}
+        if: failure()
