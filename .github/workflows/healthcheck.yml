@@ -13,7 +13,7 @@ jobs:
       - name: Check Pokedex health at Heroku
         uses: jtalk/url-health-check-action@9f9a163f533fcbf8b3d9fe1bf5458e8c23502698
         with:
-          url: https://pokedex-al.herokuapp.com/health/
+          url: https://pokedex-al.herokuapp.com/hdealth/
           follow-redirect: false
           max-attempts: 3
           retry-delay: 5s
