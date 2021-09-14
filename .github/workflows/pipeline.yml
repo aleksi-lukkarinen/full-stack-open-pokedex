@@ -84,6 +84,6 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
           status: ${{ job.status }}
-          text: Pokedex build of version (${{ env.AS_COMMIT }}) failed!
+          text: Pokedex build of commit (${{ github.sha }}) failed!
           fields: repo,commit,ref,workflow,message,author,job,took
         if: failure()
