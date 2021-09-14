@@ -64,11 +64,18 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-          status: ${{ job.status }}
-          fields: workflow,job,commit,repo,ref,author,took,message
-          author_name: ${ env.AS_WORKFLOW }
-          job_name: ${ env.AS_WORKFLOW }
-          text: A new Pokedex version (${{env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/ from ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ env.AS_AUTHOR }} in ${ env.AS_TOOK }.
+          status: custom
+          author_name: ${process.env.AS_WORKFLOW}
+          job_name: ${process.env.AS_JOB}
+          mention: here
+          #if_mention: failure,cancelled
+          custom_payload: |
+            {
+              attachments: [{
+                color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+                text: `A new Pokedex version (${{env.AS_COMMIT}}) from ${process.env.AS_REPO}@${process.env.AS_REF} has been deployed to https://pokedex-al.herokuapp.com/ by ${process.env.AS_AUTHOR} in ${process.env.AS_TOOK}.`,
+              }]
+            }
         if: always()
 
 #        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
