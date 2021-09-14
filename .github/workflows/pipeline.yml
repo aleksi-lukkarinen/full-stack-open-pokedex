@@ -59,7 +59,24 @@ jobs:
       #     checkstring: "ok"
       #     rollbackonhealthcheckfailed: true
 
-      - name: Notify in Slack about a successful deployment to Heroku
+      # - name: Notify in Slack about a success
+      #   uses: 8398a7/action-slack@047b09b154480ed39076984b64f324fff010d703
+      #   env:
+      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      #   with:
+      #     status: custom
+      #     fields: repo,commit,ref,workflow,message,author,job,took
+      #     custom_payload: |
+      #       {
+      #         text: `A new Pokedex version (${ process.env.AS_COMMIT }) has been deployed to https://pokedex-al.herokuapp.com/`,
+      #         attachments: [{
+      #           color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
+      #           text: `From: ${ process.env.AS_REPO }@${ process.env.AS_REF }\nBy: ${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }\nBuild took ${ process.env.AS_TOOK }.\n\nCommit author: ${ process.env.AS_AUTHOR }\nCommit message: ${ process.env.AS_MESSAGE }`,
+      #         }]
+      #       }
+      #   if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
+
+      - name: Notify in Slack about a failure
         uses: 8398a7/action-slack@047b09b154480ed39076984b64f324fff010d703
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -68,7 +85,7 @@ jobs:
           fields: repo,commit,ref,workflow,message,author,job,took
           custom_payload: |
             {
-              text: `A new Pokedex version (${ process.env.AS_COMMIT }) has been deployed to https://pokedex-al.herokuapp.com/`,
+              text: `Pokedex build of version (${ process.env.AS_COMMIT }) failed!`,
               attachments: [{
                 color: '${{ job.status }}' === 'success' ? 'good' : '${{ job.status }}' === 'failure' ? 'danger' : 'warning',
                 text: `From: ${ process.env.AS_REPO }@${ process.env.AS_REF }\nBy: ${ process.env.AS_WORKFLOW }/${ process.env.AS_JOB }\nBuild took ${ process.env.AS_TOOK }.\n\nCommit author: ${ process.env.AS_AUTHOR }\nCommit message: ${ process.env.AS_MESSAGE }`,
