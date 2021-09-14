@@ -66,9 +66,9 @@ jobs:
         with:
           status: ${{ job.status }}
           fields: workflow,job,commit,repo,ref,author,took,message
-          author_name: ${{ env.AS_WORKFLOW }}
-          job_name: ${{ env.AS_WORKFLOW }}
-          text: A new Pokedex version (${{env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/ from ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ env.AS_AUTHOR }} in ${process.env.AS_TOOK}.
+          author_name: ${ env.AS_WORKFLOW }
+          job_name: ${ env.AS_WORKFLOW }
+          text: A new Pokedex version (${{env.AS_COMMIT}}) deployed to https://pokedex-al.herokuapp.com/ from ${process.env.AS_REPO}@${process.env.AS_REF} by ${{ env.AS_AUTHOR }} in ${ env.AS_TOOK }.
         if: always()
 
 #        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
