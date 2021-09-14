@@ -66,6 +66,7 @@ jobs:
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
+
 #        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && job.status == 'success' }}
 #          author_name: simple_deployment_pipeline
 #          job_name: simple_deployment_pipeline
