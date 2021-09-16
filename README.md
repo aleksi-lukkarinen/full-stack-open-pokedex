@@ -1,5 +1,9 @@
 # Full Stack open CI/CD
 
+[![Pipeline](https://github.com/aleksi-lukkarinen/full-stack-open-pokedex/actions/workflows/pipeline.yml/badge.svg)](https://github.com/aleksi-lukkarinen/full-stack-open-pokedex/actions/workflows/pipeline.yml)
+
+
+
 This repository is used for the CI/CD module of the Full stack open course
 
 Fork the repository to complete course exercises
